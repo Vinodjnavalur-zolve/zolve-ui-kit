@@ -1,6 +1,6 @@
 {
   "name": "@zolve-innovations/zolve-ui-kit",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Zolve's custom UI elements. Includes an Input Box, dropdowns, buttons etc",
   "main": "index.js",
   "scripts": {
