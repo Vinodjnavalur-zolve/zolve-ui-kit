@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "one place for all the ui elements of zolve ",
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/Vinodjnavalur-zolve"
+    "@Vinodjnavalur-zolve:registry": "https://npm.pkg.github.com"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
