@@ -1,6 +1,6 @@
 {
   "name": "@vinodjnavalur-zolve/zolve-ui-kit",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "one place for all the ui elements of zolve ",
   "publishConfig": {
     "@Vinodjnavalur-zolve:registry": "https://npm.pkg.github.com"
