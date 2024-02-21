@@ -1,6 +1,6 @@
 {
   "name": "zolve-ui-kit",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Zolve's custom UI elements. Includes an Input Box, dropdowns, buttons etc ",
   "publishConfig": {
     "access": "public"
