@@ -1,138 +1,160 @@
 import React, { useState, ChangeEvent, KeyboardEvent, WheelEvent } from 'react';
+import Debounce from '../../helpers/Debounce';
+import { ValidationType } from '../../validators';
+
+type ErrorObject = {
+    isValid: boolean;
+    errorText: string;
+};
+
+type InputType = 'email' | 'text' | 'search' | 'numeric' | 'tel' | 'url' | 'none' | 'decimal';
+type InputMode = 'verbatim' | 'latin' | 'latin-name' | 'latin-prose' | 'full-width-latin' | 'kana' | 'kana-name' | 'katakana' | 'numeric' | 'tel' | 'email' | 'url';
+
+type InputValidators = {
+    [key in ValidationType]: (value: any, selectedCountry?: string) => ErrorObject;
+};
 
 interface InputGroupProps {
-  variant?: string;
-  name: string;
-  label: string;
-  value: string;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  inputType: string;
-  placeholder?: string;
-  helperText?: string;
-  maxLength?: number | null;
-  autoFocus?: boolean;
-  inputMode?: "search" | "numeric" | "text" | "email" | "tel" | "url" | "none" | "decimal";
-  pattern?: string;
-  readOnly?: boolean;
-  capsOnly?: boolean;
-  disabled?: boolean;
-  format: (value: string) => string;
-  split?: boolean;
+    validation: ValidationType;
+    variant?: string;
+    name?: string;
+    value?: any;
+    onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+    inputType?: InputType;
+    placeholder?: string;
+    helperText?: string;
+    maxLength?: number | null;
+    autoFocus?: boolean;
+    inputMode?: InputMode;
+    pattern?: string;
+    readOnly?: boolean;
+    capsOnly?: boolean;
+    disabled?: boolean;
+    format?: (value: string) => string;
+    split?: boolean;
+    label: string;
 }
 
-import './InputGroup.css'
-
 const InputGroup: React.FC<InputGroupProps> = ({
-  variant = 'outlined',
-  name,
-  label,
-  value,
-  onChange,
-  inputType,
-  placeholder = ' ',
-  helperText = '',
-  maxLength = null,
-  autoFocus = false,
-  inputMode,
-  pattern,
-  readOnly = false,
-  capsOnly = false,
-  disabled = false,
-  format,
-  split = false,
+    validation,
+    variant = 'outlined',
+    name,
+    value,
+    onChange,
+    inputType = 'text',
+    placeholder = ' ',
+    helperText = '',
+    maxLength = null,
+    autoFocus = false,
+    inputMode,
+    pattern,
+    readOnly = false,
+    capsOnly = false,
+    disabled = false,
+    format,
+    split = false,
+    label
 }) => {
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+    const [filled, setFilled] = useState(false);
+    const [validationObject, setValidationObject] = useState<ErrorObject>({
+        isValid: true,
+        errorText: '',
+    });
 
-  const adjustedMaxLength: number | undefined = maxLength !== null ? maxLength : undefined;
 
-
-  const handleIconClick = () => {
-    switch (inputType) {
-
-      default:
-        break;
-    }
-  };
-
-  const getInputFieldIcon = () => {
-    switch (inputType) {
-
-      default:
-        return <></>;
-    }
-  };
-
-  const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const inputValue = capsOnly ? event?.target?.value?.toUpperCase() : event?.target?.value;
-    onChange(event);
-  };
-
-  const onKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-    const keyCode = event.code === 'Space' ? 'Space' : event.key;
-    if (!['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight'].includes(keyCode || event.key)
-      && isNaN(Number(keyCode))
-      && inputMode === 'numeric'
-    ) {
-      event.preventDefault();
-      return false;
-    }
-
-    return true;
-  };
-
-  const onKeyUp = (event: KeyboardEvent<HTMLInputElement>) => {
-    event.currentTarget.value = format(event.currentTarget.value);
-  };
-
-  const onWheel = (event: WheelEvent<HTMLInputElement>) => {
-    if (inputType === 'number') {
-      event.currentTarget.blur();
-    }
-  };
-
-  return (
-    <div className={`input-group ${split ? 'input-group--split' : ''}`}>
-      <label className='input-group__label'>
-        <input
-          className={`input-group__input
-            input-group__input--${variant}
-            ${capsOnly ? 'input-group__input--caps' : ''}`}
-          type={inputType}
-          placeholder={placeholder}
-          name={name}
-          onKeyDown={onKeyDown}
-          onKeyUp={onKeyUp}
-          onChange={handleOnChange}
-          maxLength={adjustedMaxLength}
-          autoComplete='off'
-          defaultValue={value}
-          autoFocus={autoFocus}
-          inputMode={inputMode}
-          pattern={pattern}
-          readOnly={readOnly}
-          onWheel={onWheel}
-          disabled={disabled}
-        />
-        <span
-          className={`input-group__span`
-          }
-        >
-          {label}
-        </span>
-        <span
-          className='input-group__input-endIcon'
-          onClick={handleIconClick}
-        >
-          {getInputFieldIcon()}
-        </span>
-      </label>
-      <div
-        className={`input-group__text`
+    const getInputFieldIcon = () => {
+        switch (inputType as InputType) {
+            default:
+                return <></>;
         }
-      >
-        
-      </div>
-    </div>
-  );
+    };
+
+    const handleOnChange = Debounce((event: ChangeEvent<HTMLInputElement>) => {
+        // const inputValue = capsOnly ? (event?.target?.value?.toUpperCase() as string) : event?.target?.value as string;
+    
+        // // Use type assertion to tell TypeScript that inputType is a valid key
+        // const validationCheck = InputValidators[inputType as keyof typeof InputValidators](inputValue);
+    
+        onChange(event);
+        // setFilled(!!inputValue);
+        // setValidationObject(validationCheck);
+        setValidationObject(
+            {
+                "isValid": false,
+                "errorText": "ERROR"
+            }
+        )
+    });
+    
+
+    console.log(validationObject);
+    
+    
+
+    const onKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+        const keyCode = event.code === 'Space' ? 'Space' : event.key;
+        if (!['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight'].includes(keyCode)
+            && isNaN(Number(keyCode))
+            && inputMode === 'numeric'
+        ) {
+            event.preventDefault();
+            return false;
+        }
+        return true;
+    };
+
+    const onKeyUp = (event: KeyboardEvent<HTMLInputElement>) => {
+        event.currentTarget.value = format ? format(event.currentTarget.value) : event.currentTarget.value;
+    };
+
+    return (
+        <div className={`input-group ${split ? 'input-group--split' : ''}`}>
+            <label className='input-group__label'>
+                <input
+                    className={`input-group__input
+                        input-group__input--${filled ? 'filled' : ''}
+                        input-group__input--${variant}
+                        input-group__input--${validation}
+                        ${capsOnly ? 'input-group__input--caps' : ''}
+                        ${!validationObject.isValid ? 'input-group__input--error' : ''}`}
+                    type={isPasswordVisible ? 'text' : inputType}
+                    placeholder={placeholder}
+                    name={name}
+                    onKeyDown={onKeyDown}
+                    onKeyUp={onKeyUp}
+                    onChange={handleOnChange}
+                    maxLength={maxLength!}
+                    autoComplete='off'
+                    defaultValue={value}
+                    autoFocus={autoFocus}
+                    // inputMode={inputMode as InputMode}
+                    pattern={pattern}
+                    readOnly={readOnly}
+                    disabled={disabled}
+                />
+                <span
+                    className={`input-group__span
+                        ${!validationObject.isValid ? 'input-group__span--error' : ''}`}
+                >
+                    {label}
+                </span>
+                <span
+                    className='input-group__input-endIcon'
+                >
+                    {getInputFieldIcon()}
+                </span>
+            </label>
+            <div
+                className={`input-group__text
+                    ${!validationObject.isValid ? 'input-group__text--error' : ''}`}
+            >
+                {!validationObject.isValid ?
+                    validationObject.errorText
+                    : !value ? helperText : ''}
+            </div>
+        </div>
+    );
 };
 
 export default InputGroup;

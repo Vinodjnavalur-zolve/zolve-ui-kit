@@ -1,0 +1,31 @@
+const  MIN_AGE_REQUIREMENT  = 18
+
+export default {
+    TEXT: 'text',
+    REFERRAL_CODE: 'Invalid Referral Code',
+    PASSWORD: {
+        DEFAULT: 'Password should be at least 8 characters long, must contain one lower case, one upper case, a digit and a special character.',
+        MIN_LENGTH: 'Minimum of 8 characters long',
+        MISSING_LOWER_CASE: 'Should contain a lowercase letter',
+        MISSING_DIGIT: 'Should contain at least one number (0-9)',
+        MISSING_UPPER_CASE: 'Should contain an uppercase letter',
+        MISSING_SPECIAL_CHAR: 'Should contain at least one Special Character Ex: $, %, @, &',
+    },
+    EMAIL: 'Please enter a valid email.',
+    OTP: 'Invalid verification code.',
+    ZIP_CODE: 'Invalid ZIP CODE.',
+    PHONE: 'Invalid Phone number.',
+    FULL_NAME: 'Required.',
+    FIRST_NAME: 'Required.',
+    MIDDLE_NAME: 'Required.',
+    LAST_NAME: 'Last name cannot contain more than 24 characters',
+    SPECIAL_CHARACTERS: 'Should not contain special characters',
+    NUMERIC: 'Should not contain numbers',
+    REQUIRED: 'Required.',
+    PAN: 'Please enter a valid PAN number',
+    SSN: 'Please enter a valid SSN',
+    ADDRESS: 'Please enter address starting with building number',
+    DOB: `Minimum age requirement is ${MIN_AGE_REQUIREMENT} years`,
+    DATE: 'Please enter a valid date',
+    MIN_ALLOWED_DATE: 'Minimal allowed date is 01/01/1900',
+};
