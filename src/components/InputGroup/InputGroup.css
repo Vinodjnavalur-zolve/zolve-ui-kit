@@ -1,0 +1,220 @@
+.input-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    width: 100%;
+    padding: 10px 0;
+}
+
+.input-group--split {
+    width: 48% !important;
+}
+
+.input-group__label {
+    position: relative;
+    padding-top: 6px;
+    width: 100%;
+    margin: 0 !important;
+}
+
+.input-group__input {
+    width: 100%;
+    max-height: 56px;
+    padding: 15px;
+    outline: none;
+    font-size: 16px;
+    font-weight: 400;
+    border: none;
+    position: relative;
+}
+
+.input-group__input--outlined {
+    border: 1px solid #d6d6d6;
+    border-radius: 8px;
+}
+
+.input-group__input--standard {
+    border-bottom: 2px solid #d6d6d6;
+}
+
+.input-group__input-endIcon {
+    float: right;
+    margin-right: 4px;
+    margin-top: -52px;
+    position: relative;
+    cursor: pointer;
+    height: 48px;
+    width: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.input-group__input--error {
+    border-color: #cc0000 !important;
+}
+
+.input-group__input--otp {
+    letter-spacing: 15px;
+    font-size: 20px;
+}
+
+.input-group__input--otp::placeholder {
+    font-size: 20px;
+    color: #EBEBEB;
+}
+
+.input-group__input--ssn {
+    font-weight: 500;
+    letter-spacing: 5px;
+}
+
+.input-group__input--ssn::placeholder {
+    font-size: 16px;
+    color: #EBEBEB;
+}
+
+.input-group__input--phone {
+    font-size: 20px;
+    letter-spacing: 5px;
+}
+
+.input-group__input--phone::placeholder {
+    letter-spacing: 0px;
+}
+
+.input-group__input--prefixer {
+    padding-left: 55px;
+}
+
+.input-group__input--password {}
+
+.input-group__input--caps {
+    text-transform: uppercase;
+}
+
+.input-group__input:disabled {
+    border-color: #ebebeb;
+    background-color: white;
+    color: #c2c2c2;
+}
+
+input[readonly] {
+    color: #757575;
+}
+
+.input-group__input:disabled + .input-group__span {
+    color: #c2c2c2;
+}
+
+.input-group__span {
+    position: absolute;
+    top: 0;
+    left: 10px;
+    display: flex;
+    transition: transform 0.2s ease-out;
+    transform: translate(-5%, -20%) scale(0.8);
+    -webkit-transform: translate(-5%, -20%) scale(0.8);
+    will-change: transform;
+    padding: 0 5px;
+    color: black;
+    background: transparent;
+}
+
+.input-group__span--error {
+    color: #cc0000 !important;
+}
+
+.input-group__input:not(:focus) + .input-group__span {
+    color: #999999;
+    top: 7px;
+}
+
+.input-group__input--filled:not(:focus) + .input-group__span {
+    color: #999999;
+    top: 0;
+}
+
+.input-group__input:not(:focus) ::placeholder {
+    color: transparent;
+}
+
+.input-group__input:not(:focus):placeholder-shown + .input-group__span {
+    color: #999999;
+    font-weight: 400;
+    transform: translate(0, 90%) scale(1);
+    -webkit-transform: translate(0, 90%) scale(1);
+    background-color: transparent;
+    white-space: nowrap;
+}
+
+.input-group__input:not(:focus):not(:placeholder-shown) + .input-group__span--error {
+    color: #cc0000 !important;
+}
+
+.input-group__input:focus {
+    border-color: #000;
+}
+
+.input-group__input:not(:focus):not(:placeholder-shown) + .input-group__span::after {
+    content: "\A";
+    position: absolute;
+    background: white;
+    top: 40%;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    z-index: -1;
+}
+
+.input-group__input:focus + .input-group__span::after {
+    content: "\A";
+    position: absolute;
+    background: white;
+    top: 40%;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    z-index: -1;
+}
+
+.input-group__text {
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
+    color: black;
+    font-weight: 300;
+    min-height: 18px !important;
+    min-width: 2px !important;
+    margin-top: 2px;
+}
+
+.input-group__text--error {
+    font-size: 12px;
+    color: #cc0000;
+}
+
+.input-group__disclaimer {
+    /* background-color: $header-bg; */
+    color: #757575;
+    font-size: 12px;
+    padding: 20px;
+    padding-top: 25px;
+    border-radius: 10px;
+    margin-top: -44px;
+    animation: fadeIn 0.5s ease-in;
+}
+
+.input-group__disclaimer ul {
+    list-style-type: disc;
+    padding: 0 15px;
+}
+
+.input-group__input--filled .input-group__input:not(:focus) + .input-group__span {
+    top: 0;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
